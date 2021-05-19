@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d222369"],{ce3d:function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",{staticClass:"box"})},c=[];window.alert("我是签到");var s={name:"MyQd"},r=s,i=t("2877"),l=Object(i["a"])(r,a,c,!1,null,"652b5179",null);n["default"]=l.exports}}]);
+//# sourceMappingURL=chunk-2d222369.e6eebf29.js.map
