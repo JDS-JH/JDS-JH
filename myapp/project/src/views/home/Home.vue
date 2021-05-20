@@ -74,33 +74,31 @@
         data(){
             return{
             ls:[],
+                xwPage:[],
             xw:[],
             }
         },
-        methods:{
-            loadMore(){
-                console.log("加载更多");
-                // const page=this.xw.page+1;
-                // tiyudata(page).then(res=>{
-                //     this.xw.data.push(...res.data.result.data)
-                //     this.xw.page +=1
-                // })
-            }
-                
-        //     getWeather(){
-        //     //将域名用/api代替
-        //     this.axios.get('/api/toutiao/index?type=top&key=b2d5f763ab9d6032ea061354e0c00fa8',{
-        //     }).then(res=>{
-        //     console.log(res);
-        //     }
-        //  )
-        //     },
 
-        },
+            mounted(){
+
+
+
+                // const refresh2=this.debounce(this.$refs.scroll.refresh(),100)
+                //监听homexwitem中的图片加载完成
+                this.$bus.$on("itemImageLoad",()=>{
+
+                    this.$refs.scroll.refresh()
+
+                })
+            },
           created() {
             tiyudata(1).then(res=>{
                 console.log(res)
                 this.xw=res.data.result.data;
+
+                this.xwPage=parseInt(res.data.result.page);
+
+
             })
             // var date=month+"/"+day;
             // console.log(date)
@@ -108,12 +106,53 @@
             //     console.log(res)
             //     this.ls=res.data.result;
             // })
-              //监听homexwitem中的图片加载完成
-              this.$bus.$on("itemImgLoad",()=>{
-                  console.log("--------------");
-                  this.$refs.scroll.refresh()
-              })
-  }
+            //
+
+
+  },
+            methods:{
+                loadMore(){
+                    console.log("加载更多");
+
+                    const page=this.xwPage+1;
+                    tiyudata(page).then(res=>{
+                        this.xwPage=parseInt(res.data.result.page);
+                        console.log(this.xwPage)
+                        console.log(typeof this.xwPage)
+                        this.xw.push(...res.data.result.data);
+                        this.xwPage +=1;
+
+                        //完成上拉加载更多
+                        this.$refs.scroll.finishPullUp2()
+
+                    })
+
+                },
+                //函数的防抖
+                // debounce(func,wait){
+                //     let timeout=null;
+                //     return function(...args){
+                //         var that=this;
+                //         if(timeout){
+                //             clearTimeout(timeout);
+                //         }
+                //         timeout=setTimeout(() => {
+                //             func.apply(that,args)
+                //         }, wait);
+                //     }
+                //
+                // }
+
+                //     getWeather(){
+                //     //将域名用/api代替
+                //     this.axios.get('/api/toutiao/index?type=top&key=b2d5f763ab9d6032ea061354e0c00fa8',{
+                //     }).then(res=>{
+                //     console.log(res);
+                //     }
+                //  )
+                //     },
+
+            },
 
 
         // }

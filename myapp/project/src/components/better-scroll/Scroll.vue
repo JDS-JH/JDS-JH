@@ -23,26 +23,24 @@
         },
         methods:{
             refresh(){
-                this.scroll.refresh();
+
+                this.scroll && this.scroll.refresh();
+            },
+            finishPullUp2(){
+                this.scroll && this.scroll.finishPullUp()
             }
         },
         mounted(){
-            this.$nextTick(()=>{//为了确保DOM已经渲染
-                if(!this.scroll) {
                     this.scroll = new BScroll(this.$refs.wrapper, {
                         pullUpLoad:this.pullUpLoad,
                         probeType:3,
                         scrollY:true
                     });
                     this.scroll.on('pullingUp',()=>{
-                        // console.log("上拉加载更多");
+
                         this.$emit('pullingUp');
+                        // console.log(this.scroll);
                     })
-                }
-                else {
-                    this.scroll.refresh()
-                }
-            })
 
             //监听上拉事件
 
